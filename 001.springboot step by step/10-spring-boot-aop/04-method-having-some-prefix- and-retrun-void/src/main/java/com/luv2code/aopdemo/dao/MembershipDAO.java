@@ -4,4 +4,8 @@ public interface MembershipDAO {
 
     void addSillyMember();
 
+    void add();
+
+    int addVersion();
+
 }
