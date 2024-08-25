@@ -256,10 +256,6 @@ public class AccountDAOImpl implements AccountDAO {
 ```java
 package com.luv2code.aopdemo.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
-
 @Aspect
 @Component
 public class MyDemoLoggingAspect {
@@ -299,10 +295,6 @@ Process finished with exit code 0
 ```java
 package com.luv2code.aopdemo.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
-
 @Aspect
 @Component
 public class MyDemoLoggingAspect {
@@ -329,9 +321,6 @@ public class MyDemoLoggingAspect {
 @Component
 public class MyDemoLoggingAspect {
 
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
 
     @Before("execution(public void com.luv2code.aopdemo.dao.AccountDAO.addAccount())")
     public void beforeAddAccountAdvice() {
@@ -376,10 +365,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyDemoLoggingAspect {
 
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
-
     @Before("execution(public void add*())")
     public void beforeAddAccountAdvice() {
 
@@ -414,8 +399,6 @@ before this addAccount() aspect will run
 
 ```java
 package com.luv2code.aopdemo.dao;
-
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class MembershipDAOImpl implements MembershipDAO {
