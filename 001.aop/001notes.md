@@ -77,7 +77,7 @@ Since this dependency is part of our pom.xml
 - Spring Boot will automatically enable support for AOP
 - No need to explicitly use __@EnableAspectJAutoProxy__ … we get it for free.can see it in some old legacy code
 ## Project 1
-### @before code
+### @before code Aspect code
 ```java
 @Aspect // @aspect telling this is aspect this listen to events before ,after ans so on
 @Component
@@ -181,7 +181,7 @@ Most common
 Lets see pointcut in next project
 
 ## Project 2
-
+### Main
 ```java
 
 @SpringBootApplication
@@ -214,7 +214,7 @@ public class AopdemoApplication {
 
 ```
 
-### Two daos
+### now we have two daos
 
 ```java
 package com.luv2code.aopdemo.dao;
@@ -252,17 +252,13 @@ public class AccountDAOImpl implements AccountDAO {
 
 ```
 
-### aspect
+### aspect execution(public void addAccount())" telling to run before public void addAccount() method
 ```java
 package com.luv2code.aopdemo.aspect;
 
 @Aspect
 @Component
 public class MyDemoLoggingAspect {
-
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
 
     @Before("execution(public void addAccount())")
     public void beforeAddAccountAdvice() {
@@ -275,7 +271,7 @@ public class MyDemoLoggingAspect {
 
 ```
 
-### Output :
+### Both DAO has public void addAccount() so apsect run before both of that so Output :
 
 ```text
 
@@ -290,29 +286,6 @@ Process finished with exit code 0
 ```
 
 ## Project 3
-
-### aspect before
-```java
-package com.luv2code.aopdemo.aspect;
-
-@Aspect
-@Component
-public class MyDemoLoggingAspect {
-
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
-
-    @Before("execution(public void addAccount())")
-    public void beforeAddAccountAdvice() {
-
-        System.out.println("\n=====>>> Executing @Before advice on method");
-
-    }
-}
-
-
-```
 
 ### aspect in here
 
@@ -332,10 +305,9 @@ public class MyDemoLoggingAspect {
 
 ```
 
-here point cut expression says any public void method of
-com.luv2code.aopdemo.dao.AccountDAO.addAccount() package
+__here point cut expression says any public void method of com.luv2code.aopdemo.dao.AccountDAO.addAccount() package__
 
-now from before AccountDAO.addAccount() this aspect will run
+__now from before AccountDAO.addAccount() this aspect will run__
 
 ```text
 
@@ -357,9 +329,6 @@ see only before account DAO before is implemented
 ```java
 package com.luv2code.aopdemo.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
@@ -375,7 +344,7 @@ public class MyDemoLoggingAspect {
 ```
 Aspect tells any public void method having add as prefix
 
-see
+### DAO's
 
 ```java
 package com.luv2code.aopdemo.dao;
@@ -482,25 +451,7 @@ Process finished with exit code 0
 ```
 
 ## Project 5
-### before Aspect was this in 04
 
-```java
-package com.luv2code.aopdemo.aspect;
-
-
-@Aspect
-@Component
-public class MyDemoLoggingAspect {
-
-
-    @Before("execution(public void add*())")
-    public void beforeAddAccountAdvice() {
-
-        System.out.println("\n=====>>> Executing @Before advice on method");
-
-    }
-}
-```
 ### now aspect is
 
 ```java
@@ -519,7 +470,7 @@ public class MyDemoLoggingAspect {
 
 
 ```
-now aspect run before every method a removed return type constraint
+now aspect run before every method ,we removed return type constraint
 
 
 ```java
