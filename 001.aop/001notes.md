@@ -423,9 +423,13 @@ public class MembershipDAOImpl implements MembershipDAO {
 }
 
 ```
-before addVersion() aspect will not run except that aspect run for every mrthod
-as addVersion() is returning int
+before addVersion(), aspect will not run 
+as addVersion() is returning int and aspect says
 
+```text
+"execution(public void add*())"
+```
+ which means return type should be void here then only aspect will run!!
 ### Main
 ```java
 @SpringBootApplication
@@ -483,17 +487,11 @@ Process finished with exit code 0
 ```java
 package com.luv2code.aopdemo.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class MyDemoLoggingAspect {
 
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
 
     @Before("execution(public void add*())")
     public void beforeAddAccountAdvice() {
@@ -510,12 +508,6 @@ public class MyDemoLoggingAspect {
 @Component
 public class MyDemoLoggingAspect {
 
-    // this is where we add all of our related advices for logging
-
-    // let's start with an @Before advice
-
-    // @Before("execution(public void add*())")
-
     @Before("execution(* add*())")
     public void beforeAddAccountAdvice() {
 
@@ -527,8 +519,8 @@ public class MyDemoLoggingAspect {
 
 
 ```
-now aspect run before every method
-see
+now aspect run before every method a removed return type constraint
+
 
 ```java
 package com.luv2code.aopdemo.dao;
@@ -548,7 +540,7 @@ public class AccountDAOImpl implements AccountDAO {
 
 ```
 
-before this addAccount() aspect will run 
+before this addAccount(), aspect will run 
 
 ```java
 package com.luv2code.aopdemo.dao;
@@ -578,8 +570,7 @@ public class MembershipDAOImpl implements MembershipDAO {
 }
 
 ```
-before addVersion() aspect will not run except that aspect run for every mrthod
-as addVersion() is returning int
+__now here aspect will run before AddVersion() too as we removed the constraint of void as of 004__
 
 ### Main
 ```java
@@ -600,11 +591,8 @@ public class AopdemoApplication {
 	}
 
 	private void demoTheBeforeAdvice(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
-
-		// call the business method
 		theAccountDAO.addAccount();
 
-		// call the membership business method
 		theMembershipDAO.addSillyMember();
 		theMembershipDAO.add();
 		theMembershipDAO.addVersion();
