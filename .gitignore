@@ -32,3 +32,5 @@ build/
 
 ###C++###
 *.exe
+.vscode
+.gitignore
