@@ -17,6 +17,8 @@
 
     - This will auto-complete the psvm shortcut to the full public static void main(String[] args) method.
 
+    -ctrl+space is for autocomplete
+
 5. To enable autosave in Spring Tool Suite (STS) or Eclipse, follow these steps:
 
     - Go to Window in the top menu.
@@ -28,3 +30,4 @@
 
  
     - Spring Tool Suite (STS) and Eclipse don't have a built-in option to autosave on every change (as you type).     
+6. ctrl+O --> to see all methods of a class    

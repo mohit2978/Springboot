@@ -91,6 +91,8 @@ Syntax:
 => Jackson is a third party library.
 
 => Jackson api provided "ObjectMapper" class to perform conversions
+
+create a simple maven project!! see code 01 which is just a simple maven project!!
     
 ```java
 
@@ -228,7 +230,11 @@ writeValue(object); // convert java obj to json
 readValue(String file);// convert json to java obj
 
 ```
-dependency we used
+read value from a file and convert to json 
+
+write value to a file as json (while converting from java)
+
+### dependency we used
 ```xml
 <dependency>
 		<groupId>com.fasterxml.jackson.core</groupId>
