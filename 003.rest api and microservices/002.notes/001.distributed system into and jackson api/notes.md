@@ -236,6 +236,10 @@ dependency we used
 		<version>2.16.1</version>
 </dependency>
 ```
+
+this json to java and java to json conversion is very useful in distributed system as there might be different tech you will be using and all understand json !! to make sure all communicate with each other correctly json is only way !! so we need to convert json to something which technology understand!!
+
+
  ### REST API development using Spring Boot
 
 
