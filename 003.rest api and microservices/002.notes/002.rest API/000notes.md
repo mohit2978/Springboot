@@ -148,6 +148,12 @@ Consumer can send body only in POST, PUT or DELETE request !!
 is not body for this request!! so should use PathParameter or 
 query paramter as no body here !! cannot use RequestBody with GET!!
 
+![alt text](image-12.png)
+See talend API tester too for get request no body is given!!
+
+![alt text](image-13.png)
+As yiu change method to post body comes!!!
+
 Body in postman is for class files!! 
 and other one is for query parameters!!
 
@@ -220,7 +226,7 @@ ex2: response and message
 	
 ```
 
-to give status code we use ResponseEntity!! there are various ways to send ResponseEntity you can see that while development!!
+to give status code along with response body we use ResponseEntity!! there are various ways to send ResponseEntity you can see that while development!!
 
 can see various status code in http.class
 
@@ -315,9 +321,11 @@ public enum HttpStatus implements HttpStatusCode {
 ```
 ## Project to get JSON response
 
-1) Create springboot app with web-starter
+As of now our rest APi returns string 
 
-2) Create Binding class to represent data
+1) Create springboot app with web-starter (by default jackson dependency will come with web-starter) no need to add jackson dependency!!
+
+2) Create Binding class(here Customer class) to represent data
 
 ```java
 public class Customer {
@@ -331,48 +339,223 @@ public class Customer {
 
 ```java
 
-@RestController
-public class CustomerRestController {
+public class AppController {
 
-	@DeleteMapping(value = "/customer/{cid}", produces = "text/plain")
+	@DeleteMapping("/customer/{cid}")
 	public String deleteCustomer(@PathVariable Integer cid) {
-		// db logic to delete
-		return "Customer Deleted";
-	}
-
-	@PutMapping(value = "/customer", consumes = "application/json", produces = "text/plain")
-	public String updateCustomer(@RequestBody Customer c) {
+		//db logic to delete
+		return "Customer-Deleted"
+;	}
+	
+	@PutMapping("/customer")
+	public String UpdateCustomer(@RequestBody Customer c) {
 		System.out.println(c);
-		// TODO: DB logic to update the record
-		return "Customer Updated";
+		//db logic to update the record
+		return "customer-updated";
 	}
-
-	@PostMapping(value = "/customer", produces = "text/plain", consumes = "application/json")
+	
+	
+	@PostMapping("/customer")
 	public ResponseEntity<String> addCustomer(@RequestBody Customer c) {
 		System.out.println(c);
-		// TODO: DB logic to insert record
-		String body = "Customer Added";
+		//db logic to insert record
+		String body = "customer-added";
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
-
-	@GetMapping(value = "/customer", produces = "application/json")
+	
+	@GetMapping("/customer")
 	public Customer getCustomer() {
-		// logic to get record from db
-		Customer c = new Customer(1, "john", "john@gmail.com");
+		//logic to get record from db
+		Customer c = new Customer(101, "balu", "balu19@gmail.com");
 		return c;
 	}
-
-	@GetMapping(value = "/customers", produces = "application/json")
-	public List<Customer> getCustomers() {
-		// logic to get records from db
-		Customer c1 = new Customer(1, "john", "john@gmail.com");
-		Customer c2 = new Customer(2, "smith", "smith@gmail.com");
-		Customer c3 = new Customer(3, "david", "david@gmail.com");
-		List<Customer> customers = Arrays.asList(c1, c2, c3);
+	
+	@GetMapping("/customers" )
+	public List<Customer> getCustomers(){
+		//logic to get records from db
+		Customer c1 = new Customer(101, "balu", "balu19@gmail.com");
+		Customer c2 = new Customer(102, "ashok", "ashok@gmail.com");
+		Customer c3  = new Customer(103, "adhi", "adhi@gmail.com");
+		
+		List<Customer> customers = Arrays.asList(c1,c2,c3);
 		return customers;
 	}
-
 }
 
 ```
 See above GET request is not having RequestBody!! 
+
+> In Springboot you need not send json , you send the Object Springboot
+mainly __RestController__
+will take care of conversion  of object to json!! similarly when json is passed to restController to RequestBody springboot will take care of conversion of json to Object!! that why we directly send the object!!
+
+see 04 in code!!to see execution!!
+
+![alt text](image-10.png)
+
+![alt text](image-11.png)
+
+see automatically response body has json in it converted by RestController
+although we hve sent the object in below method!!
+
+Jackson API logic(common logic) is not required to be written by programmer!!That is called as AutoConfiguration(you no need to convert )!!
+
+```java
+@GetMapping("/customer")
+	public Customer getCustomer() {
+		//logic to get record from db
+		Customer c = new Customer(101, "balu", "balu19@gmail.com");
+		return c;
+	}
+```
+### Request
+```text
+http://localhost:8081/customers
+```
+
+### Response
+
+```json
+[
+    {
+        "cid": 101,
+        "cname": "balu",
+        "cemail": "balu19@gmail.com"
+    },
+    {
+        "cid": 102,
+        "cname": "ashok",
+        "cemail": "ashok@gmail.com"
+    },
+    {
+        "cid": 103,
+        "cname": "adhi",
+        "cemail": "adhi@gmail.com"
+    }
+]
+
+```
+You see List of customers is coming in form of json!!
+
+### method used
+
+```java
+	@GetMapping("/customers" )
+	public List<Customer> getCustomers(){
+		//logic to get records from db
+		Customer c1 = new Customer(101, "balu", "balu19@gmail.com");
+		Customer c2 = new Customer(102, "ashok", "ashok@gmail.com");
+		Customer c3  = new Customer(103, "adhi", "adhi@gmail.com");
+		
+		List<Customer> customers = Arrays.asList(c1,c2,c3);
+		return customers;
+	}
+```
+## post method
+
+```java
+	@PostMapping("/customer")
+	public ResponseEntity<String> addCustomer(@RequestBody Customer c) {
+		System.out.println(c);
+		//db logic to insert record
+		String body = "customer-added";
+		return new ResponseEntity<>(body, HttpStatus.CREATED);
+	}
+	
+```
+
+![alt text](image-14.png)
+
+output: 
+![alt text](image-15.png)
+
+see we sending as json and conversion from json to parameter Customer class is done by jackson API implicitly!!
+
+in console we see output 
+```text
+Customer [cid=123, cname=Mohit Kumar, cemail=abc@def.com]
+```
+
+from this we actually see json converted to class!! To map to java Object 
+@RequestBody to tell dispatcher servelet that customer data is in RequestBody!!if you do not put RequestBody so dispatcher Servelet will put null in all fields of Class!!
+
+In provider app we have RestController !! so Provider always use controller to provide!!
+
+
+for  readbaility we can put our controller like below
+
+```java
+@RestController
+public class CustomerRestController {
+
+	@DeleteMapping(value="/customer/{cid}", produces="text/plain")
+	public String deleteCustomer(@PathVariable Integer cid) {
+		//db logic to delete
+		return "Customer-Deleted"
+;	}
+	
+	@PutMapping(value="/customer",consumes="application/json",produces="text/plain")
+	public String UpdateCustomer(@RequestBody Customer c) {
+		System.out.println(c);
+		//db logic to update the record
+		return "customer-updated";
+	}
+	
+	
+	@PostMapping(value="/customer", produces="text/plain",consumes="application/json")
+	public ResponseEntity<String> addCustomer(@RequestBody Customer c) {
+		System.out.println(c);
+		//db logic to insert record
+		String body = "customer-added";
+		return new ResponseEntity<>(body, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value="/customer",  produces="/application/json")
+	public Customer getCustomer() {
+		//logic to get record from db
+		Customer c = new Customer(101, "balu", "balu19@gmail.com");
+		return c;
+	}
+	
+	@GetMapping(value="/customers",produces="/application/json" )
+	public List<Customer> getCustomers(){
+		//logic to get records from db
+		Customer c1 = new Customer(101, "balu", "balu19@gmail.com");
+		Customer c2 = new Customer(102, "ashok", "ashok@gmail.com");
+		Customer c3  = new Customer(103, "adhi", "adhi@gmail.com");
+		
+		List<Customer> customers = Arrays.asList(c1,c2,c3);
+		return customers;
+	}
+}
+
+```
+
+value tells URL ,consumes tells input type and produces tells output type!!
+this is just optional!! if no input we no need put consumes !! same for output!!
+
+consumes tells which format rest APi takes input !! consumes only be put when request take RequestBody not for pathvariable and queryParameters
+
+produces tells which format rets API gives output!!
+
+---
+consumes : It represents in which format our rest api method can take input data from request body
+
+ex: consumes  = "application/json"
+
+produces : It represents in which format our rest api method can provide response to consumer in response body.	
+
+---
+can we use post mapping to delete ??
+
+yes the logic you write can be anything!!
+
+Http methods just tells what is recommended!! but you can do anything!!
+
+you can put delete in get but thats not recommended!! also that will decrease readability!! everyone follow the guidelines given by http!! 
+but it upto you what you want to do in logic!!
+
+---
+Assignment-1 : Develop REST API to perform CRUD operations with H2 DB and test it using POSTMAN.
+
+Reference : https://youtu.be/_rOUDhCE-x4?si=QQqNl9kS3WUrgI2t
