@@ -141,6 +141,10 @@ Some companies provide APIs documentation in Pdf format as they do not want you 
 
 now next we develop (provider)IRCTC app(dummy) and put in aws ec2 instance!! and we use our client make my trip (dummy) to connect to provider IRCTC!!
 
+swagger is using reflections and expose everything!! so some companies not use this!!
+
+
+
 so steps
 1. create aws account
 2. create ec2 instance!!
