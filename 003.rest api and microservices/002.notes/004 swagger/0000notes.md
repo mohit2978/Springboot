@@ -12,6 +12,8 @@
 
 Note: Using Swagger, we can test provider functionality also.			
 
+=> if we have swagger we need not to use postman!!
+
 => Consumer app team will understand provider details using swagger documentation.
 
 
@@ -31,8 +33,9 @@ this dependency is not present in the sts ! so need to put externally in pom.xml
 
 => Run the application and access swagger-ui page with below url
 
-URL : http://localhost:8080/swagger-ui.html
+URL : http://localhost:8080/swagger-ui.html --> to see UI api documentation (use this)
 
+http://localhost:8080/v3/api-docs --> to see json documentation of api
 
 using previous project only just put this dependency!!see project 05-swagger!!
 
@@ -134,4 +137,10 @@ on this request
 
  In get Request as we do not have Request Body we use Query parameter or path variable!!
 
- 
+Some companies provide APIs documentation in Pdf format as they do not want you to access everything!!Based on that you need to develop consumer application!!
+
+now next we develop (provider)IRCTC app(dummy) and put in aws ec2 instance!! and we use our client make my trip (dummy) to connect to provider IRCTC!!
+
+so steps
+1. create aws account
+2. create ec2 instance!!
