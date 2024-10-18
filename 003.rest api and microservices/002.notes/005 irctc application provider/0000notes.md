@@ -143,6 +143,16 @@ public class TicketServiceImpl implements TicketService {
 ```
 can see code in 06-IRCTC-app
 
+to get jar of application
+run as>maven build 
+
+then set goals as given in below picture
+![alt text](image.png)
+
+in pom.xml we put final name as can see in line 63
+![alt text](image-1.png)
+
+then can run the build and you see .jar in target folder with name you have given!! take .jar not .jar.original and we upload that to our ec2 machine!!
 # Deploying Provider API in AWS cloud
 
 
@@ -154,7 +164,7 @@ Reference Video : https://youtu.be/cRQPgbwOWq0?si=9b0Yuye0iFPoUB1W
 
 3) Connect with Linux VM using MobaXterm
 
-4) Upload our api jar file
+4) Upload our api jar file using mobaxterm !! 
 
 5) Install java in linux vm
 
@@ -164,11 +174,49 @@ Reference Video : https://youtu.be/cRQPgbwOWq0?si=9b0Yuye0iFPoUB1W
 
 	nohup java -jar <jarfile>	&
 
+nohup and at last & symbol so that even after closing mobaxterm you will be able to access the application
+
 7) Access our application documentation like below
 
 	URL : http://public-ip:8080/swagger-ui/index.html
 
 
-Provider URL : http://43.205.144.253:8080/swagger-ui/index.html
+ we have set up our one service!
+## inbound rules
+see inbound rules i have set
 
-  
+![alt text](image-2.png)
+
+22 for ssh connection and port 8081 for application connection!!
+  rest two i can delete!!
+
+  deleetd http and https rules even than also can access the apis!!
+
+  ## outbound rules
+  ![alt text](image-3.png)
+
+  By default, Outbound Rules in an AWS Security Group are configured to allow all outbound traffic. This means that an EC2 instance can initiate connections to any IP address and port on the internet or other services, without any restrictions.
+
+Default Outbound Rule Configuration:
+- Type: All traffic
+- Protocol: All
+- Port Range: All
+- Destination: 0.0.0.0/0 (which allows all IP addresses)
+This rule allows your instance to:
+
+Access the internet (for updates, external APIs, etc.)
+Communicate with other services (like AWS services, databases, etc.)
+If your application needs to communicate with other services (e.g., APIs or databases outside the EC2 instance), the default outbound rule will allow that traffic. You typically don't need to modify outbound rules unless you want to restrict where your EC2 instance can connect to.
+
+
+
+In core java if main method then stand alone app then jar packaging!!
+if no main then web app so packaged as war!!
+
+
+> In springboot every application will be packaged as jar as springboot runs from main method!!
+
+> if you're using Lombok in a Spring Boot application along with Swagger (via Springdoc OpenAPI or Swagger annotations), there are a few things to consider
+
+>Challenges with Lombok and Swagger
+Swagger relies on reflection to generate API documentation from your model classes (e.g., request and response objects). Lombok-generated methods like getters, setters, and constructors are not visible in the bytecode until after compilation, which may cause some fields to be missing in the generated Swagger documentation.

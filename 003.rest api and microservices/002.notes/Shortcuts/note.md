@@ -30,4 +30,6 @@
 
  
     - Spring Tool Suite (STS) and Eclipse don't have a built-in option to autosave on every change (as you type).     
-6. ctrl+O --> to see all methods of a class    
+6. ctrl+O --> to see all methods of a class 
+
+in eclipse or STS devtools works very well!!
