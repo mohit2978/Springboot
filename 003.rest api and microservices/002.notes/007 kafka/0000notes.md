@@ -79,20 +79,14 @@ to set up kafka we need environment which is set by software called zookeeper wh
 
 then on kafka we start a topic !! topic is nothing but a queue!! publisher puts message in topic!! consumer consumes message from topic!!
 
-once consumer consumed the message the message is deleeted from topic !! if you want to other consumers to see message use partitions!!
+once consumer consumed the message the message is deleted from topic !! if you want to other consumers to see message use partitions!!
 
 ![alt text](image-3.png)
 
 
 ## Steps for apache kafka in windows
 
-Step-1 : Download Zookeeper from below URL
-
-   URL : http://mirrors.estointernet.in/apache/zookeeper/
-
-Step-2 : Download Apache Kafka from below URL
-
-   URL : http://mirrors.estointernet.in/apache/kafka/
+Step-1 :  Download Apache Kafka from youtube
 
 Step-3 : Set Path to ZOOKEEPER in Environment variables upto bin folder
 
@@ -116,15 +110,6 @@ Step-7 : View created Topics using below command
 
 Command : kafka-topics.bat --list --bootstrap-server localhost:9092
 
-## install kafka on linux ec2 instance!!
-
-https://medium.com/@nimeshaamarasingha/install-apache-kafka-in-aws-ec2-instance-d530c387d265
-
-
-https://medium.com/@khasnobis.sanjit890/installing-apache-kafka-in-aws-ec2-instance-own-your-kafka-server-for-0-0992-per-hour-32cd78e7cf27
-
-
-as a developer you will not be able to set up kafka and create topic !! you message kafka admin and you tell them about create topic and he will tell topic name and topic!!
 
 ## Code skeleton
 ![alt text](image-4.png)
@@ -133,3 +118,130 @@ some configuration is needed so that it (both consumer and producer) can connect
 
 ## Create kafka producer
 
+1) Create Spring Boot application with below dependencies
+
+```xml
+<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+```	
+
+2) Create Kafka Constants class 
+
+```java
+public class AppConstants {
+
+	public static final String TOPIC = "ashokit_order_topic";
+	public static final String HOST = "localhost:9092";
+
+}
+```
+
+3) Create Model class to represent data
+```java
+@Data
+public class Order {
+
+	private String id;
+	private Double price;
+	private String email;
+	
+}
+```
+
+4) Create Kafka Producer Config class 
+
+```java
+@Configuration
+public class KafkaProduceConfig {
+
+	@Bean
+	public ProducerFactory<String, Order> producerFactory() {
+
+		Map<String, Object> configProps = new HashMap<>();
+
+		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConstants.HOST);
+		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+
+		return new DefaultKafkaProducerFactory<>(configProps);
+	}
+
+	@Bean
+	public KafkaTemplate<String, Order> kafkaTemplate() {
+		return new KafkaTemplate<>(producerFactory());
+	}
+
+}
+```
+
+4) Create Service Class 
+
+```java
+@Service
+public class OrderService {
+
+	@Autowired
+	private KafkaTemplate<String, Order> kafkaTemplate;
+
+	public String addMsg(Order order) {
+
+		// publish msg to kafka topic
+		kafkaTemplate.send(AppConstants.TOPIC, order);
+
+		return "Msg Published To Kafka Topic";
+	}
+}
+```
+
+
+5) Create RestController class
+
+```java
+@RestController
+public class OrderRestController {
+
+	@Autowired
+	private OrderService service;
+
+	@PostMapping("/order")
+	public String createOrder(@RequestBody Order order) {
+		String msg = service.addMsg(order);
+		return msg;
+	}
+
+}
+
+```
+## winscp
+WinSCP allows you to securely transfer files between a local computer and a remote server, typically over SSH. It also offers a graphical interface that makes it easy to manage and transfer files with drag-and-drop support, batch file scripting, and even integration with PuTTY for SSH connections.
+
+>not for windows server!!
