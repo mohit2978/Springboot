@@ -144,6 +144,7 @@ now next we develop (provider)IRCTC app(dummy) and put in aws ec2 instance!! and
 swagger is using reflections and expose everything!! so some companies not use this!!
 
 
+With swagger you can also tell classes which is used!!
 
 so steps
 1. create aws account
