@@ -60,7 +60,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>Irctc API</finalName>
+	<finalName>Irctc</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

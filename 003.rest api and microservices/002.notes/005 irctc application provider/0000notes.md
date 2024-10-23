@@ -172,9 +172,19 @@ Reference Video : https://youtu.be/cRQPgbwOWq0?si=9b0Yuye0iFPoUB1W
 
 6) Run jar file
 
-	nohup java -jar <jarfile>	&
+	nohup java -jar {jarfile}	&
 
 nohup and at last & symbol so that even after closing mobaxterm you will be able to access the application
+
+example
+```text
+[ec2-user@ip-172-31-3-31 ~]$ nohup java -jar Irctc.jar &
+[1] 3603
+[ec2-user@ip-172-31-3-31 ~]$ nohup: ignoring input and appending output to 'nohup.out'
+
+
+
+```
 
 7) Access our application documentation like below
 
