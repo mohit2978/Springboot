@@ -20,7 +20,7 @@ public class MakeMyTripService {
 	// consumer Logic
 		public Ticket bokticket(Passenger p) {
 			
-			String url = "http://13.232.244.174:8081/ticket";
+			String url = "http://35.154.134.229:8081/ticket";
 			
 			RestTemplate rt = new RestTemplate();
 			
@@ -35,7 +35,7 @@ public class MakeMyTripService {
 		}
 		
 		public List<Ticket> getAllTickets(){
-			String url = "http://13.232.244.174:8081/ticket";
+			String url = "http://35.154.134.229:8081/tickets";
 			RestTemplate rt = new RestTemplate();
 			
 			ResponseEntity<Ticket[]> forEntity = rt.getForEntity(url, Ticket[].class);
