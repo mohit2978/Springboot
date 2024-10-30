@@ -1,7 +1,24 @@
+# Revision
+
+![alt text](image-1.png)
+
+see case 1 fixedDelay means break between two child task !! task is 10 sec and fixedDelay 6 sec after task completes it 10 sec than only 6 sec delay starts!!here task time is not included in fixedrate!!
+
+
+in fixed rate the task time is included in fixedRate
+here two cases
+1. task time>=fixed rate (here no break)
+2. task time< fixed rate (here we have break)
+
 # Cron Expressions
 
+In industry everyone uses cron Expressions!!
+
+![alt text](image-2.png)
 There are 6 Asterisks(******) by default in cron expression as shown below. Further each asterisk has some meaning as they denote a value. These values can be assigned as Second, Minute, Hours, Day, Month, WeekDay respectively in sequence as shown below.
 Possible values at proper place are also given below.
+
+> week day are from 0-7 as sunday can 0 or 7
 
 ![alt text](image.png)
 
@@ -141,3 +158,13 @@ Ex#1 : 0 * 10 * * *
 Of course above cron expression is invalid. Once Asterisk Symbol (*) is used, then next position values are not allowed which makes expression invalid.
 
 Ex#2 : * 0 10 * * * is invalid for the same reason as mentioned above.
+
+## More examples
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+All 6 starts means every second task will be executed!!see example 3 in image!!
