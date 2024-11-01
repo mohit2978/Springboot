@@ -21,3 +21,5 @@ let's see period of time  now!!
  ![alt text](image-2.png)
 
  in eg 1 if you start at 35 second then also 40 th second be printed as cycle is predefined like 0/20 means start with 0 having 20 sec gap means 0,20,40 so no matter which second you start , it will be  printed it's cycle next  number!!
+
+> so a/b means start at a with gap of b!!
