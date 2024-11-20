@@ -20,7 +20,7 @@ public class Controller {
         this.producer = producer;
     }
 
-    // http://localhost:8080/api/v1/publish?message=hello
+
     @GetMapping("/publish")
     public ResponseEntity<String> sendMessage
     (@RequestParam("message") String message){
