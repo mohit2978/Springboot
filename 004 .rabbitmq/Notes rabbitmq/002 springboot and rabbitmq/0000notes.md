@@ -143,3 +143,5 @@ public class Consumer {
 
 - We annotate the consume method with @RabbitListener to specify the queue from which to consume messages.
 - When a message is received, the “consume” method will be invoked and the consumer can continue processing the consumed message.
+
+> Can see code 001 for producer and 002 for consumer
