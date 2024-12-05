@@ -49,6 +49,15 @@ Username : user
                 
 Password : \<copy-from-console>
 
+You will see it will be added in Header as you see header parameters will increase as you add BasicAuth!!in Header Basic:username:password will be encoded and send to server!!and on server credentials are matched !!
+
+![alt text](image.png)
+
+you see selected part that is encoded username and password!!
+
+It will not ask login each time you open in each tab!!If you open in another browser it will ask for login password!! so it is using cookies in browser for your browser!!
+
+>Assignment : Devlop application using restTemplate and webClient to access secure application , now we need to send key Authorization and value Basic Username:Password
 ## How to override Spring Security Default Credentials
 
 -> To override Default credentials we can configure security credentials in application.properties file or application.yml file like below
