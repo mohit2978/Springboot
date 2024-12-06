@@ -289,4 +289,61 @@ Authorization /admin accessed by ADMIN only
 
 /user can be accessed by Admin as well as user!!
 
+## Error
+```text
+The method antMatchers(String) is undefined for the type 
+AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry
+```
 
+This error occurs because you are likely using a newer version of Spring Security (e.g., 6.x) where the API for configuring HTTP security has changed. Specifically, the antMatchers() method was removed, and the framework now uses requestMatchers().
+
+
+```java
+
+@Configuration
+@EnableWebSecurity
+public class Config {
+	
+	private static final String ADMIN = "ADMIN";
+	private static final String USER = "USER";
+
+	@Autowired
+	private DataSource dataSource;
+	
+
+	@Autowired
+	public void authManager(AuthenticationManagerBuilder auth) throws Exception {
+	    auth.jdbcAuthentication()
+	      	.dataSource(dataSource)
+	      	.passwordEncoder(new BCryptPasswordEncoder())
+	      	.usersByUsernameQuery("select username,password,enabled from users where username=?")
+	      	.authoritiesByUsernameQuery("select username,authority from authorities where username=?");
+	}
+	
+	@Bean
+	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
+			
+		http.authorizeHttpRequests( (req) -> req
+				.requestMatchers("/admin").hasRole(ADMIN)
+				.requestMatchers("/user").hasAnyRole(ADMIN,USER)
+				.requestMatchers("/").permitAll()
+				.anyRequest().authenticated()
+		).formLogin();
+		
+		return http.build();
+	}
+
+}
+```
+
+```properties
+spring.application.name=SpringSecurity_Jdbc_Authentication
+#db specific properties
+spring.datasource.url=jdbc:mysql://whatsapp-clone-db.chwegskauib2.ap-south-1.rds.amazonaws.com/SpringSecurity
+spring.datasource.username=admin
+spring.datasource.password=Nisha2978
+
+#ORM s/w specific properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
