@@ -172,7 +172,7 @@ CREATE TABLE `authorities` (
 );
 
 ```
-
+enabled in users means is user enabled!! if yes then it is set to 1 else 0
 
 Online Encrypt : https://bcrypt-generator.com/ 
 
@@ -242,10 +242,10 @@ public class UserRestController {
 
 
 Step-5) Create Security Configuration class like below with Jdbc Authentication Manager
+
+end user provide non encrypted password but in db we have encrypted password so we use BcryptPasswordEncoder to encode the password given by user!!
+
 ```java
-package in.ashokit;
-
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -283,11 +283,25 @@ public class SecurityConfiguration {
 
 ```
 
+not using @Bean on first method as we need to use existing object , we need not create new object!! also we know Default scope is singleton and spring provide that bean already so no need to create a new bean ,it is kind of setter injection here!!
+
+
+>Note: we can not change queries in authManager method where we are configuring AuthenticationManagerBuilder!!
+
 here we are doing authentication as well as authorization 
 
 Authorization /admin accessed by ADMIN only
 
 /user can be accessed by Admin as well as user!!
+
+so here we are doing Role based authorization as on based of role we 
+are doing authorization!!
+
+>Note:if not having authorizedthen will get as 403 as error!!
+
+you might get default username on password on console , but you cannot login to application by that !!
+
+>Note: for postman we have to use same way as previous!!
 
 ## Error
 ```text
@@ -339,11 +353,17 @@ public class Config {
 ```properties
 spring.application.name=SpringSecurity_Jdbc_Authentication
 #db specific properties
-spring.datasource.url=jdbc:mysql://whatsapp-clone-db.chwegskauib2.ap-south-1.rds.amazonaws.com/SpringSecurity
+spring.datasource.url=jdbc:mysql://whatsapp-clone-db.chwegskauib2.ap-south-1.rds.amazonaws.com/<Db-name>
 spring.datasource.username=admin
-spring.datasource.password=Nisha2978
+spring.datasource.password=</password>
 
 #ORM s/w specific properties
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
+
+jdbc:mysql://whatsapp-clone-db.chwegskauib2.ap-south-1.rds.amazonaws.com/\<db-name>
+
+atlast of url you must mention the DB!!
+
+Here no registration we have done !! we will do registration also!!
