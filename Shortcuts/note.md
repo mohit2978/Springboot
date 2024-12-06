@@ -32,4 +32,6 @@
     - Spring Tool Suite (STS) and Eclipse don't have a built-in option to autosave on every change (as you type).     
 6. ctrl+O --> to see all methods of a class 
 
+7. Put cursor on anything press F3 then it will take you to its definition!!
+
 in eclipse or STS devtools works very well!!

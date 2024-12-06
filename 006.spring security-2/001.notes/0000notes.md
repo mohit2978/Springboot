@@ -27,6 +27,16 @@ To insert record in table we use JPA!!
 2) Configure Data Source properties in yml file
 
 2) Create Entity class & Repository interface 
+
+Customer Entity
+```java
+	private Integer cid;
+	private String uname;
+	private String pwd;
+	private Long phno;
+
+```
+
 ```java
 @Repository
 public interface CustomerRepo extends CrudRepository<Customer, Integer> {
@@ -35,7 +45,12 @@ public interface CustomerRepo extends CrudRepository<Customer, Integer> {
 
 }
 ```
-3) Create UserDetailsService class 
+
+Here Repository annotation is optional, JPA will get it automatically!!
+
+As username is not PK so we need to write findByUname method!!
+
+3) Create UserDetailsService class (this is for login)
 
 ```java
 @Service
@@ -51,6 +66,17 @@ public class MyUserDetailsService implements UserDetailsService {
 	}
 }
 ```
+to login based on username we get record
+
+User definition
+```java
+	public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		this(username, password, true, true, true, true, authorities);
+	}
+
+```
+
+Collections tells about the roles!!here no roles so empty collection!!if roles avialable in roles table then we pass roles from that table too!!
 
  4) Create Security Config Class
 
@@ -58,8 +84,8 @@ Here we created various beans
 
 1. PasswordEncoder - to encode password
 2. auth provider - how data coming for authentication from db
-3. AuthenticationManager - how to check is credentials valid
-4. SecurityFilterChain -to customize security!!
+3. AuthenticationManager - check is credentials valid
+4. SecurityFilterChain -to customize security!! as we want /login and /register to be accessed by all
 
 ```java
 @Configuration
@@ -68,12 +94,15 @@ public class AppSecurityConfig {
 	
 	@Autowired
 	private MyUserDetailsService userDtlsSvc;
-	
+	// for password encoding
 	@Bean
 	public PasswordEncoder pwdEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
+    //get auth provider and auth manager here we tell spring security to get user data from UserDetailService
+
+    //here telling what is user detail service and what password encoder we are using
 	@Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider=
@@ -87,7 +116,8 @@ public class AppSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-	
+
+	//configuring spring security
     @Bean
 	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
 		return http.csrf().disable()
@@ -118,11 +148,12 @@ public class CustomerRestController {
 
 	@PostMapping("/login")
 	public ResponseEntity<String> loginCheck(@RequestBody Customer c) {
-		
+		//with username and password we generate a token
 		UsernamePasswordAuthenticationToken token = 
 				new UsernamePasswordAuthenticationToken(c.getUname(), c.getPwd());
 
 		try {
+            //token is authenticated
 			Authentication authenticate = authManager.authenticate(token);
 
 			if (authenticate.isAuthenticated()) {
@@ -154,4 +185,48 @@ public class CustomerRestController {
 
  6) Run the application and test it
 
+```properties
 
+#db specific properties
+spring.datasource.url=jdbc:mysql://whatsapp-clone-db.chwegskauib2.ap-south-1.rds.amazonaws.com/<Db-name>
+spring.datasource.username=admin
+spring.datasource.password=<password>
+
+#ORM s/w specific properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+
+```
+last two tells to create table if not exists!!
+
+to debug spring security we use this in properties
+
+
+logging.level.org.springframework.security=DEBUG
+
+```java
+
+public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
+    return http.csrf(csrf -> csrf.disable())
+               .authorizeHttpRequests(auth -> auth
+                   .requestMatchers("/register", "/login", "/welcome").permitAll()
+                   .anyRequest().authenticated()
+               )
+               .build();
+```
+
+in here we first tell which url to be permitted to all using requestMatchers and then tell other request must be authenticated by anyRequest.authenticated()
+
+## Ouptput
+
+## registration
+![alt text](image-1.png)
+
+![alt text](image.png)
+
+## login
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
