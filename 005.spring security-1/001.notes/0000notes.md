@@ -108,9 +108,13 @@ public class SecurityConfigurer {
 	}
 }
 ```
+Security is applied to all urls , to avoid some of the URLs we use above way!!
+
+>Note: this method name can be anything!!
 
 ## Spring Security In-Memory Authentication
 
+Using previous approach we can not configure multiple users, so we want soething to configure multiple users!!
 
 -> In Memory Authentication means storing user credentials in the program for Authentication Purpose.
 
@@ -241,16 +245,6 @@ Step-5) Create Security Configuration class like below with Jdbc Authentication 
 ```java
 package in.ashokit;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
@@ -288,5 +282,11 @@ public class SecurityConfiguration {
 }
 
 ```
+
+here we are doing authentication as well as authorization 
+
+Authorization /admin accessed by ADMIN only
+
+/user can be accessed by Admin as well as user!!
 
 
