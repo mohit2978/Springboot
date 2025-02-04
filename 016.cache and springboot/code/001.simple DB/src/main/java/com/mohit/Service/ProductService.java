@@ -2,9 +2,7 @@ package com.mohit.Service;
 
 
 import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-@Slf4j
 public class ProductService {
 
     @Autowired
@@ -38,9 +35,7 @@ public class ProductService {
         return repository.save(product);
     }
 
-    @Cacheable(cacheNames = "products")
     public List<Product> getProducts() {
-        log.info("connecting to db");
         return repository.findAll();
     }
 
