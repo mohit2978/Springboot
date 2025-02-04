@@ -56,3 +56,11 @@ Also in log can see not getting to DB!!
 
 ![alt text](image-4.png)
 
+More you hit more time will be reduced as it is stored in cache!!
+
+Now if you insert a record ,it will not be reflect in cache!! so you need to tell ki whenever you add 
+a new value to DB first add to cache and then store in DB!!
+
+Default Cache uses concurrent Hashmap(so it is key and value)!!
+
+39:10

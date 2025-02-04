@@ -348,8 +348,8 @@ thePsychologyOfMoney.put("summary", "Timeless Lessons on Wealth, Greed, and Happ
 
 redisHashOperator.putAll("Book" + thePsychologyOfMoney.get("id"), thePsychologyOfMoney);
 //We use the putAll method to store a hash with multiple values.
-//key-->"Book" + thePsychologyOfMoney.get("id")
-//value--> thePsychologyOfMoney
+//redis hash-->"Book" + thePsychologyOfMoney.get("id")
+//key value to store in redis as in redis we have map too--> thePsychologyOfMoney
 
 log.info(String.valueOf(redisHashOperator.entries("Book" + thePsychologyOfMoney.get("id"))));
 //We log the entries of the hash data.
