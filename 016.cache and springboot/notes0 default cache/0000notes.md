@@ -7,6 +7,35 @@ we have 1 lakh record to retive the all data see 6.2 sec is taken
 ![alt text](image.png)
 
 can see code in 001.simple DB!!
+now see code in 002.simple cache!!
+
+to enable cache
+
+```java
+
+@SpringBootApplication
+@EnableCaching
+public class DemoApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+
+```
+to get cache a particular method
+
+```java
+    @Cacheable(cacheNames = "products")
+    public List<Product> getProducts() {
+        log.info("connecting to db");
+        return repository.findAll();
+    }
+
+```
+put @Cacheable for logging use slf4j!!
 
 
 After implementing cache first time
