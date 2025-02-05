@@ -53,6 +53,11 @@ public class Customer implements Serializable {
     private String phone;
 }
 ```
+
+ you're defining a Customer class that implements Serializable. This means that objects of the Customer class can be converted into a byte stream, which is useful for saving objects to files or transmitting them over a network.
+
+ serialVersionUID: This is a unique identifier for the class version. It helps ensure that a serialized object can be deserialized correctly even if the class has changed over time.
+ 
 CustomersInfo --> is hash name for redis
 Controller
 
