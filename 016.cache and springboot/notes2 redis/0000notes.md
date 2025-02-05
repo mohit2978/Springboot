@@ -1,20 +1,5 @@
 # Redis
-
-Redis is key-value table, Redis dont store as table or document!! It store as RedisHash(just like table name)!! In RedisHash we have map!!
-
-Map\<Integer,Object>--> this is how we store value in redis
-
-It can be used as :
-1. cache
-2. DB
-3. pubsub
-
-Here as key ,value so if you use this as DB !! then will be faster than RDBMS!!
-
-dependency needed
-1. Spring Web 
-2. Spring data redis
-3. Jedis (to support redis operations in java)
+let us now create our own project!!
 
 ```java
 @Configuration
@@ -159,3 +144,4 @@ public class CustomerDAO {
 
 }
 ```
+

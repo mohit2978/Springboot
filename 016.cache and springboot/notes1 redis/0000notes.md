@@ -1,11 +1,5 @@
 # Cache Redis
 
-
-1) Transactional Tables (app will perform DML (data will be manipulated)(create update delete) operations)
-
-2) Non-Transactional tables (app will perform DQL(only read operations) operations)
-
-
 => When table is static (only read operations) there is no use of retrieving data from that table again and again.
 
 => For static tables data we should use Cache.
@@ -43,6 +37,10 @@ Redis keeps data in key and value pair!!
 
 ## Redis Cache
 
+###  What is Redis?
+Redis stands for REmote DIctionary Server. It was written in C by Salvatore Sanfilippo in 2006. It is a NoSQL advanced key-value data store. The read and write operations are very fast in Redis because it stores all data in memory. The data can also be stored on the disk and can be written back to the memory.
+
+It is often referred to as a data structure server because keys can contain strings, hashes, lists, sets, sorted sets, bitmaps, and hyperloglogs.
 
 => It is an open source data store
 
@@ -60,19 +58,48 @@ Redis keeps data in key and value pair!!
 
 			2) Redis Cloud
 
-## What is Redis?
-Redis stands for REmote DIctionary Server. It was written in C by Salvatore Sanfilippo in 2006. It is a NoSQL advanced key-value data store. The read and write operations are very fast in Redis because it stores all data in memory. The data can also be stored on the disk and can be written back to the memory.
+ Redis is key-value table, Redis dont store as table or document!! It store as RedisHash(just like table name)!! In RedisHash we have map!!
 
-It is often referred to as a data structure server because keys can contain strings, hashes, lists, sets, sorted sets, bitmaps, and hyperloglogs.
+Map\<Integer,Object>--> this is how we store value in redis
+
+It can be used as :
+1. cache
+2. DB
+3. pubsub
+
+Here as key ,value so if you use this as DB !! then will be faster than RDBMS!!
+
+## Dependency needed
+
+![alt text](image-2.png)  
+
+
 
 ## What is Spring Data Redis?
 Spring Data Redis is a module of the Spring Data umbrella project that provides seamless integration with Redis. It simplifies the integration of the Spring application with Redis by offering high-level and object-oriented APIs. With Spring Data Redis, we can leverage Redis’s powerful features, such as caching, Pub/Sub messaging, and data persistence. It also supports advanced Redis features like transactions, pipelining, and Lua scripting.
+
+
+
+now to install redis we have used AWS EC2 on which we have installed redis server!!using commands
+
+```bash
+sudo apt-get install lsb-release curl gpg
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+sudo apt-get update
+sudo apt-get install redis
+
+```
+
+lets connect to redis now!!
 
 ```configuration
 spring.redis.host=localhost
 spring.redis.port=6379
 ```
 
+Now first see the operations in this  notes
 ```java
 @SpringBootApplication
 public class SpringDataRedisApplication implements CommandLineRunner {
@@ -371,11 +398,4 @@ log.info(String.valueOf(bookHashMapper.fromHash(redisHashOperator.entries("Book"
 2025-02-04 06:28:34.734 | INFO  | main       | c.s.SpringDataRedisApplication | {summary=Timeless Lessons on Wealth, Greed, and Happiness, name=The Psychology of Money, id=thePsychologyOfMoney}
 2025-02-04 06:28:35.402 | INFO  | main       | c.s.SpringDataRedisApplication | Book{id=thePsychologyOfMoney, name='The Psychology of Money', summary='Timeless Lessons on Wealth, Greed, and Happiness'}
  ```
-## Redis Messaging
-
-Learn about messaging through the publisher-and-subscriber model in Redis using Spring Data Redis.
-
-Redis messaging refers to the Pub/Sub messaging functionality provided by Redis. It allows real-time communication between publishers and subscribers, enabling the exchange of messages, notifications, and updates in a scalable and efficient manner.
-
-Spring Data Redis allows us to integrate Redis messaging in a Spring application by building a Publish/Subscribe pattern where publishers send messages to channels, and subscribers receive messages from those channels.
 
