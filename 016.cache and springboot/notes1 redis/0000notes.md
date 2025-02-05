@@ -94,9 +94,54 @@ sudo apt-get install redis
 
 lets connect to redis now!!
 
-```configuration
-spring.redis.host=localhost
-spring.redis.port=6379
+as running on ec2-machine need to chnage somehthing
+
+first go to super-user mode by `sudo su` command
+
+ Redis Configuration
+Bind Address: If Redis is configured to bind only to 127.0.0.1 (localhost), it will not accept connections from external servers. Make sure the bind directive in redis.conf allows external 
+
+put this
+
+bind 0.0.0.0
+
+Protected Mode: Ensure protected mode is either properly configured or disabled:
+
+protected-mode no
+
+Then restart the server by `sudo systemctl restart redis-server` command
+
+to connect to redis we use class configuration
+
+```java
+
+@Configuration
+public class RedisConfig {
+
+    @Bean
+    public RedisConnectionFactory connectionFactory() {
+
+        return new LettuceConnectionFactory("ip-of-ec2",6379);
+    }
+
+    @Bean
+    @Primary
+    public RedisTemplate<String, Object> redisTemplate() {
+
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+
+        //connection Factory
+        redisTemplate.setConnectionFactory(connectionFactory());
+
+        //key serializer
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+
+        // value serializer
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        return redisTemplate;
+
+    }
+
 ```
 
 Now first see the operations in this  notes

@@ -1,27 +1,34 @@
 # Redis
-let us now create our own project!!
+let us now create our own project!!first provide configuartions
 
 ```java
+
 @Configuration
-@EnableRedisRepositories
 public class RedisConfig {
 
     @Bean
-    public JedisConnectionFactory connectionFactory(){
-        //host & port
-//        RedisStandaloneConfiguration configuration=new RedisStandaloneConfiguration();
-//        configuration.setHostName("localhost");
-//        configuration.setPort(6379);
-        return new JedisConnectionFactory();
+    public RedisConnectionFactory connectionFactory() {
+
+        return new LettuceConnectionFactory("ip-of-ec2",6379);
     }
 
     @Bean
-    public RedisTemplate<Object,Object> template(){
-        RedisTemplate<Object,Object> template=new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory());
-        return template;
+    @Primary
+    public RedisTemplate<String, Object> redisTemplate() {
+
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+
+        //connection Factory
+        redisTemplate.setConnectionFactory(connectionFactory());
+
+        //key serializer
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+
+        // value serializer
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        return redisTemplate;
+
     }
-}
 
 ```
 
@@ -144,4 +151,28 @@ public class CustomerDAO {
 
 }
 ```
+now see
 
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+output:
+![alt text](image-2.png)
+
+one more insertion
+![alt text](image-3.png)
+
+then again get all
+
+![alt text](image-4.png)
+
+now see how it is stored in redis
+
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+
+first Type of customersInfo is a set which has all keys in it!!
+
+CustomerInfo:1 is id=1 and CustomerInfo is hashName
