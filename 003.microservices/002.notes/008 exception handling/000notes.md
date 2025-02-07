@@ -71,6 +71,8 @@ java.lang.ArithmeticException: / by zero
 
 ```
 
+we do not want that page to come and this big exception warning so we create our custom handler!!
+
 Now we create a Exception class AppExceptionInfo class 
 
 ```java
