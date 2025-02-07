@@ -219,3 +219,37 @@ Specific type exception method must come above method Expecting Exception.class 
 Output:
 
 ![alt text](image-1.png)
+
+This was all Global exception handler ,it is handling exceptions from all over the application now to handle exceptions of a class let  us see that!!
+
+```java
+@RestController
+public class LocalException {
+
+	@GetMapping("/local/welcome")
+	public String getMsg() {
+		
+		String msg = "Welcome To Ashok It";
+		int i = 10/0;
+		
+		return msg;
+		
+	}
+	
+	@ExceptionHandler(ArithmeticException.class)
+	public ResponseEntity<AppExInfo> handleAE(ArithmeticException e){
+		
+		AppExInfo info = new AppExInfo();
+		
+		info.setExCode("from local exception handler");
+		info.setExMsg(e.getMessage());
+		info.setExDate(LocalDateTime.now());
+	
+		return new ResponseEntity<>(info,HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
+```
+
+Output:
+
+![alt text](image-3.png)
