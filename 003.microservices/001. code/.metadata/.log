@@ -227,3 +227,60 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:14.542
+!MESSAGE Classpath changed for project: 009-spring-exception
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:16.287
+!MESSAGE Classpath changed for project: 009-spring-exception
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:16.289
+!MESSAGE Boot project ADDED: 009-spring-exception
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:16.291
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:16.362
+!MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-02-07 23:00:16.437
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+C:\Users\user\Downloads\sts\sts-4.27.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.5.v20241023-1957\jre\bin\javaw.exe
+-Dsts.lsp.client=eclipse
+-Xmx1024m
+-XX:TieredStopAtLevel=1
+-Dspring.config.location=classpath:/application.properties
+-Xlog:jni+resolve=off
+-XX:ErrorFile=C:/Users/user/Documents/programs/Springboot/003.microservices/001. code/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1738949416434
+-Dlanguageserver.hover-timeout=225
+-jar
+C:\Users\user\Downloads\sts\sts-4.27.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.59.0.202411281450\servers\spring-boot-language-server\spring-boot-language-server-1.59.0-SNAPSHOT-exec.jar
+END
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:16.438
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-02-07 23:00:16.557
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 82200
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:20.366
+!MESSAGE Classpath changed for project: 009-spring-exception
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:21.778
+!MESSAGE Classpath changed for project: 009-spring-exception
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-02-07 23:00:45.680
+!MESSAGE Classpath changed for project: 009-spring-exception
+
+!ENTRY org.eclipse.lsp4e 2 0 2025-02-07 23:21:48.440
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:66)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
