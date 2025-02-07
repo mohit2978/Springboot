@@ -132,6 +132,11 @@ public class ExceptionRestHandler {
 }
 
 ```
+
+In MVC like we have Controller so there we have Controller Advice but in Rest api we have RestController so have RestControllerAdvice
+
+RestControllerAdvice says it is global exception handler!!
+
 Now see output
 
 ![alt text](image.png)
@@ -253,3 +258,6 @@ public class LocalException {
 Output:
 
 ![alt text](image-3.png)
+
+See although global exception handler handles all type of Exception it first go tp Local Exception handler!!
+
