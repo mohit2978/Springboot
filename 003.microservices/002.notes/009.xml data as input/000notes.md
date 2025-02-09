@@ -26,12 +26,14 @@ produces : It represents output data format of provider (response body data)
 
 	produces = { "application/xml", "application/json" }
 
-Accept : It represents in which format consumer expecting response from provider
+### Http Header
+
+Accept Http Header: It represents in which format consumer expecting response from provider
 
 	Ex: Accept = application/xml
 		Accept = application/json
 
-Content-Type : It represents in which format consumer sending data to provider
+Content-Type Http Header: It represents in which format consumer sending data to provider
 
 	Ex: Content-Type = application/xml
 		Content-Type = application/json
@@ -128,11 +130,15 @@ public class Book {
 
 Consumer needs to tell which type of response it needs that is told in accept header as given in the below image!!
 
+we cannot send this Get request by browser as we need to tell header too so using talend!!
+
+
 ![alt text](image-4.png)
 
 ## output of get APi in xml
 
-By default output given in XML!!
+By default output given in XML when we put xml dependency!!If we do not add then default is JSON!!
+
 
 ![alt text](image-3.png)
 
@@ -146,4 +152,3 @@ By default output given in XML!!
 
  See 010 in code!!
 
- 
