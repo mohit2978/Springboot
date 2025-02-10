@@ -290,13 +290,24 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 		
 		config.getExposureConfiguration()
 			  .forDomainType(Book.class)
-			  .withItemExposure((metadata, http) -> http.disable(unsupportedMethods))
-			  .withCollectionExposure((metadata,http) -> http.disable(unsupportedMethods));
+			  .withItemExposure((metadata, http) -> http.disable(unsupportedMethods)) //disable for single record
+			  .withCollectionExposure((metadata,http) -> http.disable(unsupportedMethods)); //disable for multiple record
 		
 	}
 }
 
 ```
+
+We try put request
+
+![alt text](image-5.png)
+
+```text
+[2m2025-02-10T16:12:03.119+05:30[0;39m [32m INFO[0;39m [35m10588[0;39m [2m--- [011-spring-data-rest] [nio-9090-exec-1] [0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 4 ms
+Hibernate: select b1_0.id,b1_0.name,b1_0.price from book_tbl b1_0 where b1_0.id=?
+[2m2025-02-10T16:12:03.219+05:30[0;39m [33m WARN[0;39m [35m10588[0;39m [2m--- [011-spring-data-rest] [nio-9090-exec-1] [0;39m[36m.m.m.a.ExceptionHandlerExceptionResolver[0;39m [2m:[0;39m Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' is not supported]
+```
+
 Notes:
 
 1. We go for web-starter for  restController and RestTemplate
