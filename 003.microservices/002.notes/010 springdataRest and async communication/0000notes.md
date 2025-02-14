@@ -339,10 +339,10 @@ public class QuoteService {
 		 	
 			client.get()
 				  .uri(QUOTE_ENDPOINT)
-				  .header("Accept", "application/json")
+				  .header("Accept", "application/json")// to send header
 				  .retrieve()
 				  .bodyToMono(String.class)
-				  .subscribe(QuoteService::handleResponse);
+				  .subscribe(QuoteService::handleResponse);//handle response we need to create we created below!!
 			
 		  System.out.println("Rest api call completed...");
 	}
@@ -363,7 +363,7 @@ public class QuoteService {
 										  .retrieve()// gives json
 										  .bodyToMono(String.class);// convert json to given class
 		  
-		  System.out.println(bodyToMono.block());//to block
+		  System.out.println(bodyToMono.block());//to block till we get response so sync call
 		  
 		  System.out.println("Rest api call completed...");
 	}
