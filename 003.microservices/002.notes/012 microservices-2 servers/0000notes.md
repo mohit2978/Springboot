@@ -120,14 +120,39 @@ We can run multiple query here!!
 
 These 3 servers are independent services!!
 
+for rest api we need to have now
+1. eureka client
+2. admin client
+3. zipkin client
+4. actuator
+5. web starter
 
+## pom.xml of client
+```xml
+server:
+  port: 1111
 
+spring:
+  application:
+    name: WELCOME-API
 
+  boot:
+    admin:
+      client:
+        url: http://localhost:9090/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+```
 
-
-
-
+see eureka client property this is optional if eureka running on 8761 else you need to mention!! 
 
 
 
