@@ -83,6 +83,8 @@ once consumer consumed the message the message is deleted from topic !! if you w
 
 ![alt text](image-3.png)
 
+>Note: In real time you will not be able to create kafka server and kafka topics , you are only responsible for publishing and subscribing!!
+
 
 ## Steps for apache kafka in windows
 
