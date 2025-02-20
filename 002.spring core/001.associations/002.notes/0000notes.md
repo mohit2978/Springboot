@@ -1,0 +1,110 @@
+#  Association Mapping
+
+=> It is used to represent Database tables relations in our entitiy classes.
+
+=> We have several annotations to represents entities relations
+
+    @OneToOne
+
+    @OneToMany
+
+    @ManyToOne
+
+    @ManyToMany
+
+@JoinColumn : To present foreign column
+
+
+## Why we need to go for DB tables relations ?
+
+Normalization : To get organize data in better manner (to avoid duplicate data)
+
+=> In project we will have multiple tables to maintain data
+
+=> Tables will have relationships
+
+		(one table will have relation with one or many tables)
+
+
+Ex :  emp table and address table
+
+		one emp can have multiple addresses
+
+		address will have emp_id to represent data belongs to which emp
+
+
+- DB Relationships are divided into 4 types 
+
+1) One to One
+
+	Ex: person and passport (one person will have only one passport)	
+
+2) One to Many
+
+	Ex:  emp and address (one emp can have multiple addresses)				
+		 author and books (one author can publish multiple books)
+		 university and colleges (one university can have multiple colleges)
+
+3) Many to One
+
+	Ex : address and emp (multiple addresses belongs to one emp)		 
+
+4) Many To Many 	
+
+	Ex: Multiple users can have multiple roles (join table required)
+
+		(users_tbl,  roles_tbl, user_roles_tbl)
+
+## One To One Relationship
+
+
+=> One person will have one passport
+
+Note: One parent record will have one child record
+
+
+When we insert parent => child is also getting inserted
+
+When we retrieve parent => child is also getting retrieved (left join)
+
+When we retrieve child => Parent also getting retrieved (left join)
+
+When we delete parent => child + parent getting deleted 
+
+## One To Many Relationship
+
+
+Parent table record (one) will have relationship with child table records(many)
+
+Ex : One emp can have multiple addresses
+
+=> When parent inserted => child also inserted
+
+=> When parent is retrieved ==> childs are not retrieved by default 
+
+>Note: In one to many relationship default fetch type is LAZY 
+(ONLY PARENT WILL COME)
+
+=> If we want to retrieve child records also along with parent then we have to set fetch type as EAGER
+
+==> When child is retrieved => childs + parent is getting retrieved (left join)
+
+=> when parent is deleted ==> childs + parent is getting deleted
+
+## Many To Many Relationship
+
+user_tbl  : Contains users data
+
+role_tbl  : Contains roles data
+
+user_roles_tbl : Contains relations between users & roles
+
+
+=> Multiple users will have multiple roles
+
+=> To represent relation we will use third table which is called as join table.
+
+=> Join table contains join_column and inverse_join_column
+
+>Note: Don't use @Data & toString ( ) methods in entities, 
+=> If we write toString ( ) method in entity which is having association mapping then we will run into StackOverFlowError.
