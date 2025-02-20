@@ -39,6 +39,13 @@ Ex :  emp table and address table
 
 	Ex: person and passport (one person will have only one passport)	
 
+    person has passport id only so from person we get passport only!!
+    this is unidirectional relation!!
+
+    now we want from passport we should get person too for that in passport put personId too!!
+
+
+
 2) One to Many
 
 	Ex:  emp and address (one emp can have multiple addresses)				
@@ -54,6 +61,30 @@ Ex :  emp table and address table
 	Ex: Multiple users can have multiple roles (join table required)
 
 		(users_tbl,  roles_tbl, user_roles_tbl)
+
+## FetchType
+
+ It tell when to load the child record!!
+
+ Like a post on Facebook has multiple comments ,when loading post we need comments or not!!
+ Default is lazy!!as loading child with parent decrease query performance!!
+
+1. Eager--> fetch child record with parent record we need to specify eager
+
+2. Lazy --> default one!!
+
+## Inverse 
+
+Operation performed on parent must be put on child too!! we put ALL means all operations we put on parent should be put in child too!!
+
+When parent is deleted and child is not that record is called as orphan record , these are of no use so we use  ALL!!
+
+1. insert --> insert child along with parent
+
+2. delete --> delete child along with parent!!
+
+we need to think whether we need to delete child along with parent or not!!
+
 
 ## One To One Relationship
 
@@ -97,7 +128,11 @@ user_tbl  : Contains users data
 
 role_tbl  : Contains roles data
 
+![alt text](image.png)
+
 user_roles_tbl : Contains relations between users & roles
+
+we need 3 tables here!! cannot be done by 2 tables!!
 
 
 => Multiple users will have multiple roles
