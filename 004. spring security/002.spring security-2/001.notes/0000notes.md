@@ -50,7 +50,7 @@ Here Repository annotation is optional, JPA will get it automatically!!
 
 As username is not PK so we need to write findByUname method!!
 
-3) Create UserDetailsService class (this is for login)
+3) Create UserDetailsService class (this is for login) which implement UserDetailsService 
 
 ```java
 @Service
@@ -67,6 +67,32 @@ public class MyUserDetailsService implements UserDetailsService {
 }
 ```
 to login based on username we get record
+
+
+### What does UserDetailsService do?
+UserDetailsService is an interface in Spring Security used for loading user-specific data during authentication. It helps fetch user details (such as username, password, and roles) from a database or other sources.
+
+### Why is it used?
+Spring Security uses UserDetailsService to:
+
+- Fetch user details (like username, password, and roles) from a data source (e.g., database).
+- Verify user credentials during authentication.
+- Provide user roles & permissions to manage access control.
+### How does it work?
+- When a user tries to log in, Spring Security calls the loadUserByUsername() method.
+- This method fetches user details from the database (or another source).
+- If the user is found, it returns a UserDetails object containing:
+	- Username
+	- Encoded Password
+	- Roles/Authorities
+- If the user is not found, it throws UsernameNotFoundException.
+### Example Flow in a Spring Boot App
+- User enters credentials on a login page.
+- Spring Security calls loadUserByUsername() to fetch the user.
+- Spring compares the entered password with the stored (hashed) password.
+- If they match, authentication is successful.
+- Spring assigns roles to the user and grants/denies access based on security rules.
+
 
 User definition
 ```java
@@ -128,6 +154,12 @@ public class AppSecurityConfig {
 	}
 }
 ```
+
+>Note: Authentication provider tells where to fetch user data and what password encoder to use!!
+
+>Note:AuthenticationManager provide authentication functionality we no need to  tell logic to authenticate!!
+To authentication manger we send user name and password!!
+
  5) Create RestController with required methods
 
  two methods 
