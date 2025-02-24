@@ -4,6 +4,21 @@
 
 -> JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.
 
+## How JWT works!!
+
+![alt text](image.png)
+
+1. client registers so his credentials are stored in DB!! and then he login !!
+
+2. after login he receives a token from provider using JWTUtils class!!After successful login , we send a token to client!!
+
+3. now to access secured URL , client need to send that token along with URL!!
+
+4. validation is for 3 url's so we use validate method for all three using filters!! we are not going to write logic to validate token in all 3 methods!! so before going to restController token must be validated so filter is used!!
+
+
+5. token will have expiry too !!so after that expiry time token will be expired!!
+
 -> JWT official Website : https://jwt.io/
 
 -> Below is the sample JWT Token
@@ -17,8 +32,6 @@ token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I
 		3) Signature
 
 Note: JWT 3 parts will be seperated by using dot(.)
-
-
 
 
 1) JWT Token generation (JwtService.java)
