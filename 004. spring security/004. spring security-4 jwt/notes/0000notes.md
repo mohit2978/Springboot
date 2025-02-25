@@ -66,6 +66,153 @@ Note: JWT 3 parts will be seperated by using dot(.)
 Key = Authorization
 Value = Bearer <token>
 
+## SpringBoot Application
+
+1. depency needed
+
+	- Spring Security
+	- Spring Web
+	- devtools
+	- Mysql driver
+	- data jpa dependency
+
+ also these 3 dependency needs to be added for Jwt
+
+ ```xml
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+ ```	
+
+2. now configure database info 
+
+```yml
+server:
+  port: 8082
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Balu@123
+    url: jdbc:mysql://localhost:3306/ashokit
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+```
+
+3. entity class
+
+```java
+
+@Entity
+public class UserEntity {
+
+	@Id // for pk
+	@GeneratedValue // to auto generate this value
+	private Integer uid;
+	private String uname;
+	private String upwd;
+	private Long phno;
+	public Integer getUid() {
+		return uid;
+	}
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+	public String getUpwd() {
+		return upwd;
+	}
+	public void setUpwd(String upwd) {
+		this.upwd = upwd;
+	}
+	public Long getPhno() {
+		return phno;
+	}
+	public void setPhno(Long phno) {
+		this.phno = phno;
+	}
+	
+}
+```
+4. repository
+
+
+```java
+public interface UserRepo  extends JpaRepository<UserEntity, Integer> {
+	
+	// select * from user_tabl where uname = !uname
+	
+	public UserEntity  findByUname(String uname);
+
+}
+
+```
+
+5. service class implemeting User Detail service where we overide method loadUSerbyUserName
+
+```java
+@Service
+public class MyUserDetailsService implements UserDetailsService {
+
+	@Autowired
+	private UserRepo repo;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		UserEntity entity = repo.findByUname(username);
+		return new User(entity.getUname(), entity.getUpwd(), Collections.emptyList());
+	}
+	
+	public boolean saveUser(UserEntity user) {
+         user = repo.save(user);
+		return user.getUid() != null;
+	}
+	
+
+}
+
+```
+
+6. controller let us see that
+
+```java
+@RestController
+@RequestMapping("/api")
+public class UserRestController {
+
+	// register
+	public String registerUser(UserEntity user) {
+		return null;
+		
+	}
+}
+
+```
+
+Login will be taken care by spring security!!
+
+7. need to create password encoder class
 ## JWT in Microservices
 
 => Auth-Service contains functionality for user registration and user login with MySQL DB. 
