@@ -12,6 +12,10 @@
 
 2. after login he receives a token from provider using JWTUtils class!!After successful login , we send a token to client!!
 
+	![alt text](image-1.png)
+
+	see how we get the token
+
 3. now to access secured URL , client need to send that token along with URL!!
 
 4. validation is for 3 url's so we use validate method for all three using filters!! we are not going to write logic to validate token in all 3 methods!! so before going to restController token must be validated so filter is used!!
@@ -19,7 +23,13 @@
 
 5. token will have expiry too !!so after that expiry time token will be expired!!
 
--> JWT official Website : https://jwt.io/
+After getting token when you login from token to secured url's you 
+will be able to login !!
+
+![alt text](image-2.png)
+
+remember token is bearer token!!
+
 
 -> Below is the sample JWT Token
 
@@ -64,7 +74,7 @@ Value = Bearer <token>
 
 => API-Gateway contains logic to validate the token using Filter.
 
-Note: In API-Gateway we have added routings for our microservices along with Filter.
+>Note: In API-Gateway we have added routings for our microservices along with Filter.
 
 => When we access any microservice url through api-gateway then api-gateway will execute filter to validate the token. If token is valid then only api-gateway will route the request to particular microservice. If token is invalid then api-gateway will throw Exception.
 
