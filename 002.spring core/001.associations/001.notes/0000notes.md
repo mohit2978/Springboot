@@ -143,3 +143,102 @@ we need 3 tables here!! cannot be done by 2 tables!!
 
 >Note: Don't use @Data & toString ( ) methods in entities, 
 => If we write toString ( ) method in entity which is having association mapping then we will run into StackOverFlowError.
+
+## One to One Mapping
+```yml
+spring:
+  datasource:
+    username: ashokit
+    password: AshokIT@123
+    url: jdbc:mysql://localhost:3306/jrtp22
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+```
+
+### Entity
+
+```java
+@Entity
+@Data
+public class Passport {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer passportId;
+	private String passportNum;
+	private LocalDate issuedDate;
+	private LocalDate expDate;
+	
+	@OneToOne
+	@JoinColumn(name="person_id")
+	private Person person;
+
+}
+```
+```java
+@Entity
+@Data
+public class Person {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer personId;
+	private String personName;
+	private LocalDate dob;
+
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+	private Passport passport;
+
+}
+```
+see how one to one mapped!! we have simple jpa repository 
+
+###  Service
+
+```java
+public class PersonService {
+
+	@Autowired
+	private PersonRepo personRepo;
+
+	@Autowired
+	private PassportRepo passportRepo;
+
+	public void savePersonWithPassport() {
+
+		Passport passport = new Passport();
+		passport.setPassportNum("K8HKHK6");
+		passport.setIssuedDate(LocalDate.now());
+		passport.setExpDate(LocalDate.now().plusYears(10));
+
+		Person person = new Person();
+		person.setPersonName("John");
+		person.setDob(LocalDate.now().minusYears(20));
+
+		passport.setPerson(person);
+		person.setPassport(passport);
+
+		personRepo.save(person);
+	}
+
+	public void deletePerson(int id) {
+		personRepo.deleteById(id);
+	}
+
+	public void getPerson(int id) {
+		personRepo.findById(id);
+	}
+
+	public void getPassport(int id) {
+		passportRepo.findById(id);
+	}
+
+	public void deletePassport(int id) {
+		passportRepo.deleteById(id);
+	}
+}
+```
